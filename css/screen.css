@@ -1,0 +1,42 @@
+body {
+    background: #fff;
+    color: #2f2928;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    line-height: 1.5em;
+}
+
+#layoutroot {
+    margin: 20px auto;
+}
+
+h1, h2, h3, h4{
+    font-weight: bold;
+    color: #333;
+}
+
+#thumbs img {
+    width: 115px;
+    border: 1px solid #999;
+    margin: 0px 5px 3px 0px;
+    box-shadow: 2px 2px 5px #aaa;
+}
+
+#thumbs {
+    float:left;
+    background-color: #eee;
+    width: 250px;
+    padding: 10px;
+}
+
+input {
+    font-size: 20px;
+}
+
+#grid{
+    float:left;
+}
+#grid canvas{
+    width: 700px;
+    height: 700px;
+    background-color: #ddd;
+}
