@@ -12,19 +12,31 @@
         <div id="layoutroot">
             <div id="thumbs">
                 <h2>Thumbs</h2>
-                <input id="fileSelector" data-bind="event: {change: openFolder}" type="file" webkitdirectory>
+                <input id="fileSelector" data-bind="event: {change: openFolder}" type="file" multiple>
                 <div data-bind="foreach: Files">
-                    <img data-bind="attr:{src: DataUrl}" />
+                    <img ondragstart="onDragStart(event);" draggable="true" data-bind="attr:{src: DataUrl}" />
                 </div>
             </div>
             <div id="grid">
-                <canvas>
+                <canvas ondrop="onDropCanvas(event);" ondragover="allowDrop(event);">
 
                 </canvas>
             </div>
         </div>
     </body>
     <script type="text/javascript">
+        function allowDrop(ev)
+        {
+            ev.preventDefault();
+        }
+        function onDragStart(e){
+            e.dataTransfer.setData("Text",e.target.id);
+            console.log(e);
+        }
+        function onDropCanvas(e){
+            console.log(e);
+        }
+
         app.initialize();
         ko.applyBindings(app.indexViewModel, layoutroot);
     </script>
