@@ -1,43 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="css/html5reset-1.6.1.css?v=1">
-    <link rel="stylesheet" href="css/screen.css">
-    <script src="Lib/jquery-2.1.0.min.js"></script>
-    <script src="Lib/knockout-3.0.0.js"></script>
-    <script src="Models/GridImage.js"></script>
-    <script src="ViewModels/IndexViewModel.js"></script>
-    <script src="Models/GridImage.js"></script>
-    <script src="app.js"></script>
-    <body>
-        <div id="layoutroot">
-            <div id="thumbs">
-                <h2>Thumbs</h2>
-                <input id="fileSelector" data-bind="event: {change: openFolder}" type="file" multiple>
-                <div data-bind="foreach: Files">
-                    <img ondragstart="onDragStart(event);" draggable="true" data-bind="attr:{src: DataUrl}" />
-                </div>
-            </div>
-            <div id="grid">
-                <canvas ondrop="onDropCanvas(event);" ondragover="allowDrop(event);">
+<link rel="stylesheet" href="css/html5reset-1.6.1.css?v=1">
+<link rel="stylesheet" href="css/screen.css">
+<script src="Lib/jquery-2.1.0.min.js"></script>
+<script src="Lib/knockout-3.0.0.js"></script>
+<script src="Models/GridImage.js"></script>
+<script src="ViewModels/IndexViewModel.js"></script>
+<script src="Models/GridImage.js"></script>
+<script src="app.js"></script>
+<body>
+<div id="layoutroot">
+    <div id="thumbs">
+        <h2>Thumbs</h2>
+        <input id="fileSelector" data-bind="event: {change: openFolder}" type="file" multiple>
 
-                </canvas>
-            </div>
+        <div data-bind="foreach: Files">
+            <img ondragstart="onDragStart(event);" draggable="true" data-bind="attr:{src: DataUrl}"/>
         </div>
-    </body>
-    <script type="text/javascript">
-        function allowDrop(ev)
-        {
-            ev.preventDefault();
-        }
-        function onDragStart(e){
-            e.dataTransfer.setData("Text",e.target.id);
-            console.log(e);
-        }
-        function onDropCanvas(e){
-            console.log(e);
-        }
+    </div>
+    <div id="grid">
+        <canvas ondrop="onDropCanvas(event);" ondragover="allowDrop(event);">
 
-        app.initialize();
-        ko.applyBindings(app.indexViewModel, layoutroot);
-    </script>
+        </canvas>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function onDragStart(e) {
+        e.dataTransfer.setData("application/backhome-image-url", e.target.getAttribute('src'));
+    }
+    function onDropCanvas(e) {
+        var url = e.dataTransfer.getData("application/backhome-image-url");
+        if (url) {
+            var ctx = e.toElement.getContext("2d");
+            var image=new Image();
+            console.log(image);
+            image.onload = function () {
+                console.log("loaded");
+                ctx.drawImage(image,0,0);
+            }
+            image.src=url;
+
+        }
+    }
+
+    app.initialize();
+    ko.applyBindings(app.indexViewModel, layoutroot);
+</script>
 </html>
